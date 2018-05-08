@@ -23,7 +23,8 @@ def _main_():
                        "RSL_AVG", "RSL_CUR", "TLHTT", "TLLTT", "TSL_MAX", "TSL_MIN", "TSL_AVG", "TSL_CUR", "RLHTT", "RLLTT",
                        "ATPC_N_ADJUST", "ATPC_P_ADJUST",	"ODU_SSV_TH"]
 
-        write_field_names = ["Source1", "Source2", "ATTN_S1_S2_Watts", "ATTN_S1_S2_dBm", "ATTN_S2_S1_Watts", "ATTN_S2_S1_dBm"]
+        write_field_names = ["Source1", "Source2", "AVG_TSL_FRM_S1", "AVG_RSL_TO_S2", "AVG_TSL_FRM_S2", "AVG_RSL_TO_S1",
+                             "ATTN_S1_S2_Watts", "ATTN_S1_S2_dBm", "ATTN_S2_S1_Watts", "ATTN_S2_S1_dBm"]
 
         reader = csv.DictReader(cml_data_file, fieldnames=read_field_names)
 
@@ -77,6 +78,10 @@ def _main_():
 
                                 new_data.writerow({"Source1": "-".join(link_ends[link_end]),
                                                    "Source2": "-".join(link_ends[next_link_end]),
+                                                   "AVG_TSL_FRM_S1": all_rows[link_end]['TSL_AVG'],
+                                                   "AVG_RSL_TO_S2": all_rows[next_link_end]['RSL_AVG'],
+                                                   "AVG_TSL_FRM_S2": all_rows[next_link_end]['TSL_AVG'],
+                                                   "AVG_RSL_TO_S1": all_rows[link_end]['RSL_AVG'],
                                                    "ATTN_S1_S2_Watts": attenuation_from_s1_to_s2_in_watts,
                                                    "ATTN_S1_S2_dBm": attenuation_from_s1_to_s2_in_dBm,
                                                    "ATTN_S2_S1_Watts": attenuation_from_s2_to_s1_in_watts,
