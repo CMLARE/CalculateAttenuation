@@ -54,7 +54,7 @@ def _main_():
                                 attenuation_from_s2_to_s1_in_watts = float(dBm_to_W(float(all_rows[next_link_end]['TSL_AVG']))) - float(dBm_to_W(float(all_rows[link_end]['RSL_AVG'])))
                                 print("attenuation_from_s2_to_s1_in_watts " + str(attenuation_from_s2_to_s1_in_watts))
 
-                                if attenuation_from_s2_to_s1_in_watts < 0:
+                                if attenuation_from_s2_to_s1_in_watts > 0:
                                     attenuation_from_s2_to_s1_in_dBm = W_to_dBm(
                                         float(dBm_to_W(float(all_rows[next_link_end]['TSL_AVG']))) - float(
                                             dBm_to_W(float(all_rows[link_end]['RSL_AVG']))))
@@ -66,7 +66,7 @@ def _main_():
                                 attenuation_from_s1_to_s2_in_watts = float(dBm_to_W(float(all_rows[link_end]['TSL_AVG']))) - float(dBm_to_W(float(all_rows[next_link_end]['RSL_AVG'])))
                                 print("attenuation_from_s1_to_s2_in_watts " + str(attenuation_from_s1_to_s2_in_watts))
 
-                                if attenuation_from_s1_to_s2_in_watts < 0:
+                                if attenuation_from_s1_to_s2_in_watts > 0:
                                     attenuation_from_s1_to_s2_in_dBm = W_to_dBm(
                                         float(all_rows[link_end]['TSL_AVG']) - float(
                                             all_rows[next_link_end]['RSL_AVG']))
