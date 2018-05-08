@@ -1,19 +1,25 @@
 import csv
 from _decimal import Decimal
 from math import log
+from os import listdir
+from os.path import isfile, join
+
 
 def dBm_to_W(dBm):
     power = 10 ** ((float(dBm)-30)/10)
     return Decimal(power).to_eng_string()
 
+
 def W_to_dBm(power):
     dBm = 30 + 10 * log(float(power),10)
     return (dBm)
 
-def _main_():
+
+def _main_(folder_path, edited_file_location, csv_file_name):
+
     # file locations
-    csv_file_location = "C:\\Users\\Akalanka\Desktop\\New folder\PM_IG30028_15_201803180000_01.csv"
-    edited_csv_file_location = "C:\\Users\\Akalanka\Desktop\\PM_IG30028_15_201803180000_01.csv"
+    csv_file_location = folder_path + csv_file_name
+    edited_csv_file_location = edited_file_location + csv_file_name
 
     # open file to read
     with open(csv_file_location, "r") as cml_data_file:
@@ -88,5 +94,11 @@ def _main_():
                                                    "ATTN_S2_S1_dBm": attenuation_from_s2_to_s1_in_dBm})
 
 
+def get_all_files(folder_path, edited_file_path):
+    onlyfiles = [f for f in listdir(folder_path) if isfile(join(folder_path, f))]
 
-_main_()
+    for i in onlyfiles:
+        _main_(folder_path, edited_file_path, i)
+
+get_all_files("C:\\Users\\Akalanka\\Desktop\\New folder\\drive-download-20180321T185453Z-001\\",
+              "C:\\Users\\Akalanka\\Desktop\\edited files\\")
