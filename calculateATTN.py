@@ -50,14 +50,29 @@ def _main_(folder_path, edited_file_location, csv_file_name):
 
             new_data.writeheader()
             for link_end in range(0,len(link_ends)):
-                link_end_with_axis = link_ends[link_end][2] + "-" + link_ends[link_end][3]
+                # check next element is 23 or 24
+                if link_ends[link_end][3] == "24" or link_ends[link_end][3] == "23" \
+                        or link_ends[link_end][3] == "25" or link_ends[link_end][3] == "26":
+                    link_end_with_axis = link_ends[link_end][2] + "-" + link_ends[link_end][3]
+                else:
+                    link_end_with_axis = link_ends[link_end][2] + "-" + link_ends[link_end][3] + \
+                                         "-" + link_ends[link_end][4]
                 if not (traversed_links.__contains__(link_end_with_axis)):
                     traversed_links.append(link_end_with_axis)
+                    print(link_end_with_axis)
 
                     for next_link_end in range(0,len(link_ends)):
-                        if not next_link_end == link_end:
-                            if ((link_ends[link_end][2] + "-" + link_ends[link_end][3]) == (link_ends[next_link_end][2] +
-                                                                                                "-" + link_ends[next_link_end][3])):
+                        if not link_ends[next_link_end] == link_ends[link_end]:
+                            if link_ends[link_end][3] == "24" or link_ends[link_end][3] == "23" \
+                                    or link_ends[link_end][3] == "25" or link_ends[link_end][3] == "26":
+                                new_link_end_with_axis = link_ends[link_end][2] + "-" + link_ends[link_end][3]
+                                new_next_link_end_with_axis = link_ends[next_link_end][2] + "-" + link_ends[next_link_end][3]
+                            else:
+                                new_link_end_with_axis = link_ends[link_end][2] + "-" + link_ends[link_end][3] + \
+                                                     "-" + link_ends[link_end][4]
+                                new_next_link_end_with_axis = link_ends[next_link_end][2] + "-" + link_ends[next_link_end][3] + \
+                                                     "-" + link_ends[next_link_end][4]
+                            if (new_link_end_with_axis == new_next_link_end_with_axis):
                                 attenuation_from_s2_to_s1_in_watts = float(dBm_to_W(float(all_rows[next_link_end]['TSL_AVG']))) - float(dBm_to_W(float(all_rows[link_end]['RSL_AVG'])))
                                 print("attenuation_from_s2_to_s1_in_watts " + str(attenuation_from_s2_to_s1_in_watts))
 
