@@ -11,7 +11,7 @@ def dBm_to_W(dBm):
 
 
 def W_to_dBm(power):
-    dBm = 30 + 10 * log(float(power),10)
+    dBm = 30 + 10 * log(float(power), 10)
     return (dBm)
 
 
@@ -77,9 +77,7 @@ def _main_(folder_path, edited_file_location, csv_file_name):
                                 print("attenuation_from_s2_to_s1_in_watts " + str(attenuation_from_s2_to_s1_in_watts))
 
                                 if attenuation_from_s2_to_s1_in_watts > 0:
-                                    attenuation_from_s2_to_s1_in_dBm = W_to_dBm(
-                                        float(dBm_to_W(float(all_rows[next_link_end]['TSL_AVG']))) - float(
-                                            dBm_to_W(float(all_rows[link_end]['RSL_AVG']))))
+                                    attenuation_from_s2_to_s1_in_dBm = W_to_dBm(attenuation_from_s2_to_s1_in_watts)
                                     print("attenuation_from_s2_to_s1_in_dBm " + str(attenuation_from_s2_to_s1_in_dBm))
                                 else:
                                     attenuation_from_s2_to_s1_in_dBm = "ATTN_NEG"
@@ -89,9 +87,7 @@ def _main_(folder_path, edited_file_location, csv_file_name):
                                 print("attenuation_from_s1_to_s2_in_watts " + str(attenuation_from_s1_to_s2_in_watts))
 
                                 if attenuation_from_s1_to_s2_in_watts > 0:
-                                    attenuation_from_s1_to_s2_in_dBm = W_to_dBm(
-                                        float(all_rows[link_end]['TSL_AVG']) - float(
-                                            all_rows[next_link_end]['RSL_AVG']))
+                                    attenuation_from_s1_to_s2_in_dBm = W_to_dBm(attenuation_from_s1_to_s2_in_watts)
                                     print("attenuation_from_s1_to_s2_in_dBm " + str(attenuation_from_s1_to_s2_in_dBm))
                                 else:
                                     attenuation_from_s1_to_s2_in_watts = "ATTN_NEG"
